@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {API_URL} from "@/config";
 import {IUser} from "@/models/userToken";
 
@@ -7,18 +7,18 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    user: null
+  user: null
 }
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        setUser: (state: AuthState, action: PayloadAction<IUser | null>) => {
-            console.log("setUser", state, action);
-            state.user = action.payload;
-        },
+  name: "auth",
+  initialState,
+  reducers: {
+    setUser: (state: AuthState, action: PayloadAction<IUser | null>) => {
+      console.log("setUser", state, action);
+      state.user = action.payload;
     },
+  },
 });
 
 export const {setUser} = authSlice.actions;

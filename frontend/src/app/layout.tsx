@@ -17,14 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html className="h-full bg-white" lang="en">
-    <StoreProvider>
-      <ConfigAxios>
-      <body className="h-full">
-        <Navbar/>
-        {children}
-      </body>
-      </ConfigAxios>
-    </StoreProvider>
+      <StoreProvider>
+        <ConfigAxios>
+          <body className="h-full">
+            <Navbar/>
+            {children}
+          </body>
+        </ConfigAxios>
+      </StoreProvider>
     </html>
   );
 }
