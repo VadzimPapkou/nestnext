@@ -11,7 +11,7 @@ import {
 import { UsersService } from "./users.service";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "./user.entity";
-import { UserGuard } from "../auth/user-guard";
+import { UserGuard } from "./user-guard";
 
 @Controller("users")
 export class UsersController {
