@@ -12,7 +12,6 @@ import {
 import { DeedsService } from "./deeds.service";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { GetUser } from "../auth/get-user.decorator";
-import { UserGuard } from "../users/user-guard";
 import { DeedGuard } from "./deed-guard";
 
 @Controller("deeds")
