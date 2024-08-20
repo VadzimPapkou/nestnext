@@ -12,22 +12,23 @@ import { UsersService } from "./users.service";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "./user.entity";
 import { UserGuard } from "./user-guard";
+import { AdminGuard } from "./admin-guard";
 
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard, UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Put(":id")
   async updateUser(
     @Param("id") id: number,
     @Body("username") username: string,
-    @Body("password") password?: string,
+    @Body("password") password: string,
   ): Promise<User> {
     return this.usersService.updateUser(id, username, password);
   }
 
-  @UseGuards(JwtAuthGuard, UserGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Delete(":id")
   async deleteUser(@Param("id") id: number): Promise<void> {
     return this.usersService.deleteUser(id);
