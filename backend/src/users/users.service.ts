@@ -6,6 +6,7 @@ import {
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, getManager, Repository } from "typeorm";
 import { User } from "./user.entity";
+import { FriendDto } from "./dto";
 
 @Injectable()
 export class UsersService {
@@ -26,14 +27,12 @@ export class UsersService {
   async updateUser(
     id: number,
     username: string,
-    password?: string,
+    password: string,
   ): Promise<User> {
     const user = await this.findById(id);
 
     user.username = username;
-    if (password) {
-      user.password = password;
-    }
+    user.password = password;
 
     return this.userRepository.save(user);
   }
@@ -45,8 +44,10 @@ export class UsersService {
     }
   }
 
-  async findById(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+  async findById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException(`User with id ${id} not found`);
+    return user;
   }
 
   async findByUsername(username: string) {
@@ -79,7 +80,7 @@ export class UsersService {
     };
   }
 
-  async removeFriend(userId: number, friendId: number) {
+  async removeFriend(userId: number, friendId: number): Promise<void> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ["friends"],
@@ -104,7 +105,7 @@ export class UsersService {
     });
   }
 
-  async findUserFriends(userId: number) {
+  async findUserFriends(userId: number): Promise<FriendDto[]> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ["friends", "friends.deeds"],

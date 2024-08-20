@@ -6,6 +6,7 @@ import {
 import { UsersService } from "../users/users.service";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
+import { AuthResponseDto } from "./dto";
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(username: string, password: string): Promise<any> {
+  async register(username: string, password: string): Promise<AuthResponseDto> {
     const existingUser = await this.usersService.findByUsername(username);
     if (existingUser) {
       throw new ConflictException("Username already exists");
@@ -35,7 +36,7 @@ export class AuthService {
     };
   }
 
-  async login(username: string, password: string): Promise<any> {
+  async login(username: string, password: string): Promise<AuthResponseDto> {
     const user = await this.usersService.findByUsername(username);
     if (!user) {
       throw new UnauthorizedException("Invalid credentials(no username)");
