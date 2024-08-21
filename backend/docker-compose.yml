@@ -18,6 +18,7 @@ services:
       - db
     volumes:
       - .:/app
+      - /app/node_modules
 
   pgadmin:
     image: dpage/pgadmin4
